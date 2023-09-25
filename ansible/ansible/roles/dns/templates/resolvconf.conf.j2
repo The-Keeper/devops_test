@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+
+name_servers="{% for ns in nameservers %}{{ ns }}{% if not loop.last %} {% endif %}{% endfor %}"
+

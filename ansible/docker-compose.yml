@@ -1,3 +1,7 @@
+# Тестовая среда состоит из виртуальной сети (ansible_network), 
+# в которую входит основанная на образе alpinelinux/ansible нода (controller) 
+# и сервер, конфигурация которого находится в подкаталоге `ubuntu-server`.
+
 version: "3"
 
 networks:

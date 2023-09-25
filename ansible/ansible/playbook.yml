@@ -2,5 +2,12 @@
 - hosts: servers
   remote_user: admin
   roles:
+    - role: install-packages
+      packages: 
+      - nmap
+      - traceroute
+      - vim
+      - nano
+      - htop
     - role: dns
       nameservers: ["1.1.1.1", "8.8.8.8"]

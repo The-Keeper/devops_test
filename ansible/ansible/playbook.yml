@@ -1,0 +1,12 @@
+---
+- hosts: servers
+  remote_user: admin
+  roles:
+    - role: install-packages
+      vars:
+        packages: 
+        - nmap
+        - traceroute
+        - vim
+        - nano
+        - htop

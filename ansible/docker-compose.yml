@@ -1,0 +1,28 @@
+version: "3"
+
+networks:
+  ansible_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/24
+          gateway: 192.168.10.1
+
+
+services:
+  controller:
+    image: alpinelinux/ansible
+    volumes:
+      - ./ansible:/root/ansible
+    networks:
+      ansible_network:
+        ipv4_address: 192.168.10.2
+    stdin_open: true 
+    tty: true
+    
+  server:
+    build: ubuntu-server
+    networks:
+      ansible_network:
+        ipv4_address: 192.168.10.10

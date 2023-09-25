@@ -1,0 +1,7 @@
+---
+- name: "Configure DNS resolvers"
+  template:
+    src: "templates/resolvconf.conf.j2"
+    dest: "/etc/resolvconf.conf"
+    mode: "0644"
+  become: true

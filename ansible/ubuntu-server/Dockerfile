@@ -2,7 +2,10 @@
 FROM ubuntu:18.04
 
 # установим sudo и службу ssh (требуются для ansible) 
-RUN apt update && apt install -y openssh-server sudo
+RUN apt update 
+RUN apt install -y openssh-server 
+RUN apt install -y sudo
+RUN apt install -y openresolv 
 
 # Создадим пользователя admin
 RUN adduser --shell /bin/bash admin\

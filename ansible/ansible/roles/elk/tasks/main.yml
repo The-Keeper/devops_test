@@ -1,0 +1,27 @@
+---
+- name: Install Docker and compose
+  apt:
+    name: ["docker", "docker-compose"]
+    state: present
+
+- name: Ensure docker is started
+  become: yes
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Ensure /opt/elk/ exists
+  file: 
+    path: /opt/elk 
+    state: directory
+  
+- name: Copy docker-compose file
+  template:
+    src: templates/docker-compose.yml.j2
+    dest: /opt/elk/docker-compose.yml
+
+- name: Start ELK stack
+  docker_compose:
+    project_src: /opt/elk
+    state: present

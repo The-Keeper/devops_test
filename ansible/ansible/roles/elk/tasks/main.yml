@@ -1,15 +1,23 @@
 ---
-- name: Install Docker and compose
+- name: Install pip
   apt:
-    name: ["docker", "docker-compose"]
+    name: ["python3-pip"]
     state: present
+    update_cache: false
 
-- name: Ensure docker is started
-  become: yes
+- name: Install docker and docker-compose
+  pip:
+    executable: pip3
+    name: 
+    # версии по документации: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
+      - docker>1.25
+      - docker-compose>=1.7.0,<2.0.0
+
+- name: Run and enable docker
   service:
     name: docker
     state: started
-    enabled: yes
+    enabled: true
 
 - name: Ensure /opt/elk/ exists
   file: 

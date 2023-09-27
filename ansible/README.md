@@ -22,12 +22,17 @@
 
 3. Установить и настроить сервер следуя инструкциям (принять предложение установки openssh).
 4. Создать пользователя `admin` с правами запуска команд суперпользователя.
-5. Отключить виртуальную машину и перезапустить командой: `qemu-system-x86_64 -drive file=ubuntu.cow  -enable-kvm -m 2G -smp 2 -vga virtio -net nic,model=virtio -net user,hostfwd=tcp::2222-:22`
+5. Отключить виртуальную машину и перезапустить командой:
+   ```console
+   qemu-system-x86_64 -drive file=ubuntu.cow  -enable-kvm -m 2G -smp 2 -vga virtio -net nic,model=virtio -net user,hostfwd=tcp::2222-:22
+   ```
    Это откроет доступ к ssh по 127.0.0.1:2222. Если при запуске добавить параметр `-snapshot` произведенные изменения будут временными (полезно для тестирования). 
-6. Поместить в ``.ssh/config` следующие настройки:
-   ```Host ubuntu-vm
+7. Поместить в `.ssh/config` следующие настройки:
+   ```
+   Host ubuntu-vm
          HostName 127.0.0.1
-         Port 2222```
+         Port 2222
+   ```
 Теперь к хосту можно будет обращаться по адресу `ubuntu-vm`.
 
 7. Создать ключи для подключения по ssh:
@@ -38,12 +43,12 @@
 
 8. Разместить ключи на сервере для доступа к учетной записи админа:
    ```console
-   # ssh-copy-id admin@ubuntu-vm
+   ssh-copy-id admin@ubuntu-vm
    ```
    На вопрос о продолжении подключения ответить `yes`, по запросу ввести пароль. 
 9.  Выполнить сценарий Ansible:
    ```console
-   # ansible-playbook -i ansible/inventory ansible/playbook.yml
+   ansible-playbook -i ansible/inventory ansible/playbook.yml
    ```
   Убедиться, что сценарий сработал, можно по соответствующей сводке:
   ```

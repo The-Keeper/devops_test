@@ -37,7 +37,7 @@
 
 7. Создать ключи для подключения по ssh:
    ```console
-   # ssh-keygen
+   ssh-keygen
    ```
    Это сгенерирует публичный и приватный ssh-ключи. В реальной ситуации желательно задать надёжный пароль. 
 
@@ -46,7 +46,7 @@
    ssh-copy-id admin@ubuntu-vm
    ```
    На вопрос о продолжении подключения ответить `yes`, по запросу ввести пароль. 
-9.  Выполнить сценарий Ansible:
+9. Выполнить сценарий Ansible:
    ```console
    ansible-playbook -i ansible/inventory ansible/playbook.yml
    ```

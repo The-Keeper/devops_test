@@ -1,9 +1,18 @@
 FROM python:3.8-slim-buster
 
-WORKDIR /python-docker
+RUN groupadd --gid 1000 app && \
+    useradd --create-home --gid 1000 --uid 1000 app
 
-RUN pip3 install Flask==2.0.2
+RUN mkdir -p /home/app/src
 
-COPY . .
+WORKDIR /home/app/src
 
-CMD [ "python3", "app.py"]
+COPY ./ /home/app/src
+
+RUN pip3 install Flask==2.0.2 gunicorn==20.0.4
+
+USER app
+
+ENTRYPOINT ["gunicorn"]
+
+CMD ["app:app"]

@@ -1,0 +1,4 @@
+apiVersion: v2
+name: python-webapp-docker
+version: 1.0.0
+

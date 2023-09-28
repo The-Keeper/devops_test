@@ -1,9 +1,14 @@
 ---
-- name: Install pip
+- name: Install pip and docker service
   apt:
-    name: ["python3-pip"]
+    name: ["python3-pip", "docker.io"]
     state: present
-    update_cache: false
+
+- name: Run and enable docker
+  systemd_service:
+    name: docker
+    state: started
+    enabled: true
 
 - name: Install docker and docker-compose
   pip:
@@ -12,12 +17,6 @@
     # версии по документации: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
       - docker>1.25
       - docker-compose>=1.7.0,<2.0.0
-
-- name: Run and enable docker
-  service:
-    name: docker
-    state: started
-    enabled: true
 
 - name: Ensure /opt/elk/ exists
   file: 
@@ -29,7 +28,19 @@
     src: templates/docker-compose.yml.j2
     dest: /opt/elk/docker-compose.yml
 
-- name: Start ELK stack
-  docker_compose:
+- name: Build container
+  community.docker.docker_compose:
     project_src: /opt/elk
+    build: true
+
+- name: Re-create a ELK container
+  community.docker.docker_container:
+    name: elk
+    image: sebp/elk
     state: present
+    recreate: true
+    exposed_ports:
+      - 9200
+      - 5601
+      - 5044
+      

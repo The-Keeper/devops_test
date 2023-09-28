@@ -1,6 +1,7 @@
 ---
 - hosts: servers
-  remote_user: admin
+  remote_user: super
+  become: true
   roles:
     - role: install-packages
       packages: 
@@ -12,4 +13,3 @@
     - role: dns
       nameservers: ["1.1.1.1", "8.8.8.8"]
     - role: elk
-      become: true

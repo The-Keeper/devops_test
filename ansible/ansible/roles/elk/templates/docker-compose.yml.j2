@@ -1,27 +1,9 @@
 version: '3'
 services:
-  elasticsearch:
-    image: elasticsearch:7.17.13
+  elk:
+    image: sebp/elk
+    container_name: elk
     ports:
-      - 9200:9200
-    environment:
-      - discovery.type=single-node
-    volumes:
-      - ./elk/elasticsearch-data:/usr/share/elasticsearch/data
-
-  kibana:
-    image: kibana:7.17.13
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
-
-  logstash:
-    image: logstash:7.17.13
-    ports:
-      - 5044:5044
-    volumes:
-      - ./elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-    depends_on:
-      - elasticsearch
-
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
